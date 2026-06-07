@@ -1,0 +1,38 @@
+{
+  "scheme": "HMAC-SHA256 over \"<t>.<body>\", header WirePayment-Signature: t=,v1=",
+  "secret": "whsec_testvector000000000000000000",
+  "now": 1700000300,
+  "tolerance_seconds": 300,
+  "cases": [
+    {
+      "name": "valid",
+      "body": "{\"id\":\"evt_test\",\"object\":\"event\",\"type\":\"payment_intent.succeeded\"}",
+      "header": "t=1700000100,v1=a7b1a9325beb479412e4a7bc529a94fefebbc9530e56f33ba9c36825e238dc15",
+      "valid": true
+    },
+    {
+      "name": "tampered_body",
+      "body": "{\"id\":\"evt_test\",\"object\":\"event\",\"type\":\"payment_intent.succeeded\"} ",
+      "header": "t=1700000100,v1=a7b1a9325beb479412e4a7bc529a94fefebbc9530e56f33ba9c36825e238dc15",
+      "valid": false
+    },
+    {
+      "name": "tampered_sig",
+      "body": "{\"id\":\"evt_test\",\"object\":\"event\",\"type\":\"payment_intent.succeeded\"}",
+      "header": "t=1700000100,v1=0000000000000000000000000000000000000000000000000000000000000000",
+      "valid": false
+    },
+    {
+      "name": "expired",
+      "body": "{\"id\":\"evt_test\",\"object\":\"event\",\"type\":\"payment_intent.succeeded\"}",
+      "header": "t=1699999000,v1=1955a9d48f404e643184b5b21862ef8439d4fbddc5dcfe001d43beeb2654aea3",
+      "valid": false
+    },
+    {
+      "name": "malformed_header",
+      "body": "{\"id\":\"evt_test\",\"object\":\"event\",\"type\":\"payment_intent.succeeded\"}",
+      "header": "garbage",
+      "valid": false
+    }
+  ]
+}
