@@ -28,11 +28,11 @@ require "wirepayment"
 ```ruby
 client = Wire::Client.new("sk_live_...")
 
-# Amounts are in minor units (e.g. 50000 = 500.00 MNT).
+# Amounts are whole tögrög (MNT integer, no fractional part): 50000 = 50,000 ₮.
+# Without allowed_operators, Wire routes to the operators enabled on your project.
 pi = client.payment_intents.create(
   amount: 50_000,
-  currency: "MNT",
-  allowed_operators: ["sandbox"] # the operator ids enabled on your account
+  currency: "MNT"
 )
 puts pi["id"], pi["status"]
 
